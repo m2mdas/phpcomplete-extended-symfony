@@ -27,6 +27,12 @@ provides following sources,
 * `symfony/routes_by_name`    : Lists routes by name
 * `symfony/routes_by_pattern` : Lists routes by pattern
 
+
+Demo video (click on the image to goto youtube)
+-----------------------------------------------
+
+[![ScreenShot](http://img.youtube.com/vi/4MkDlWryWbw/maxresdefault.jpg)](http://www.youtube.com/watch?v=4MkDlWryWbw)
+
 Installation
 ------------
 Same as [phpcomplete-extended](https://github.com/m2mdas/phpcomplete-extended),
