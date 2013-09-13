@@ -1,7 +1,7 @@
 "=============================================================================
 " AUTHOR:  Mun Mun Das <m2mdas at gmail.com>
 " FILE: symfony_services.vim
-" Last Modified: August 29, 2013
+" Last Modified: September 13, 2013
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -66,6 +66,9 @@ function! s:get_services_menu_entries(args, context) "{{{
     if !empty(tag) && has_key(tag_services, tag)
         let service_keys = tag_services[tag]
         let services = filter(services, 'index(service_keys, v:key) != -1')
+        if empty(services)
+            return []
+        endif
     endif
     let service_keys = sort(service_keys)
     let padded_service_keys = phpcomplete_extended#util#add_padding(copy(service_keys))
