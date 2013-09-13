@@ -1,7 +1,7 @@
 "=============================================================================
 " AUTHOR:  Mun Mun Das <m2mdas at gmail.com>
 " FILE: symfony.vim
-" Last Modified: August 23, 2013
+" Last Modified: September 13, 2013
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -140,7 +140,7 @@ function! s:get_inside_quote_menu_entries(fqcn, token_data) "{{{
         \ || phpcomplete_extended#isClassOfType(a:fqcn, objectManagerFQCN)
         \ || phpcomplete_extended#isClassOfType(a:fqcn, managerRegistryFQCN)
         \ )
-        \ && methodPropertyText == "getRepository"
+        \ && (methodPropertyText == "getRepository" || methodPropertyText == "getClassMetadata")
 
         let menu_candidates = symfony_index['doctrine_data']['entities']
 
