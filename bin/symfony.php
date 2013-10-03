@@ -255,17 +255,21 @@ class symfony
         $viewsKeyPath = array();
 
         foreach ($bundleParameters as $bundleName => $bundleFQCN) {
+            $bundleFile = "";
             if(!array_key_exists($bundleFQCN, $fqcn_file)) {
                 try {
                     $ref = new ReflectionClass($bundleFQCN);
-                    $file = $ref->getFileName();
+                    $bundleFile = $ref->getFileName();
                 } catch (\Exception $e) {
                 }
             }else{
-                $file = $fqcn_file[$bundleFQCN];
+                $bundleFile = $fqcn_file[$bundleFQCN];
             }
 
-            $bundleFile = $fqcn_file[$bundleFQCN];
+            if(empty($bundleFile)) {
+                continue;
+            }
+
             $bundleDir = pathinfo($bundleFile, PATHINFO_DIRNAME);
             $bundleViewData = $this->processBundleViews($bundleName, $bundleDir);
             $viewsKeyPath = array_merge($viewsKeyPath, $bundleViewData['views_key_path']);
