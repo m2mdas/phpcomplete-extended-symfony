@@ -141,6 +141,17 @@ function! s:get_inside_quote_menu_entries(fqcn, token_data) "{{{
         let is_service = 1
         let menu_candidates = symfony_index['services']['public']
 
+    elseif ((phpcomplete_extended#isClassOfType(a:fqcn, containerAwareFQCN) 
+        \ || phpcomplete_extended#isClassOfType(a:fqcn, containerFQCN))
+        \    && (methodPropertyText == 'hasParameter' || methodPropertyText == 'getParameter')
+        \)
+        \ ||(phpcomplete_extended#isClassOfType(a:fqcn, containerBuilderFQCN)
+        \    && methodPropertyText == "setParameter"
+        \ ) 
+
+        let is_service = 0
+        let menu_candidates = symfony_index['parameters']
+
     elseif ( a:fqcn == objectManagerFQCN
         \ || phpcomplete_extended#isClassOfType(a:fqcn, objectManagerFQCN)
         \ || phpcomplete_extended#isClassOfType(a:fqcn, managerRegistryFQCN)
