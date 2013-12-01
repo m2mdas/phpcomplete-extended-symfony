@@ -120,18 +120,23 @@ function! s:get_inside_quote_menu_entries(fqcn, token_data) "{{{
     let methodPropertyText = a:token_data['methodPropertyText']
     let insideBraceText    = a:token_data['insideBraceText']
 
-    let containerAwareFQCN  = 'Symfony\Component\DependencyInjection\ContainerAwareInterface'
-    let containerFQCN       = 'Symfony\Component\DependencyInjection\ContainerInterface'
-    let controllerFQCN      = 'Symfony\Bundle\FrameworkBundle\Controller\Controller'
-    let objectManagerFQCN   = 'Doctrine\Common\Persistence\ObjectManager'
-    let managerRegistryFQCN = 'Doctrine\Common\Persistence\ManagerRegistry'
-    let twigEngineFQCN      = 'Symfony\Bridge\Twig\TwigEngine'
-    let symfony_index       = deepcopy(s:symfony_index)
+    let containerAwareFQCN   = 'Symfony\Component\DependencyInjection\ContainerAwareInterface'
+    let containerFQCN        = 'Symfony\Component\DependencyInjection\ContainerInterface'
+    let containerBuilderFQCN = 'Symfony\Component\DependencyInjection\ContainerBuilder'
+    let controllerFQCN       = 'Symfony\Bundle\FrameworkBundle\Controller\Controller'
+    let objectManagerFQCN    = 'Doctrine\Common\Persistence\ObjectManager'
+    let managerRegistryFQCN  = 'Doctrine\Common\Persistence\ManagerRegistry'
+    let twigEngineFQCN       = 'Symfony\Bridge\Twig\TwigEngine'
+    let symfony_index        = deepcopy(s:symfony_index)
     let is_service = 0
 
-    if (phpcomplete_extended#isClassOfType(a:fqcn, containerAwareFQCN) 
+    if ((phpcomplete_extended#isClassOfType(a:fqcn, containerAwareFQCN) 
         \ || phpcomplete_extended#isClassOfType(a:fqcn, containerFQCN))
-        \ && methodPropertyText == "get"
+        \   && methodPropertyText == "get"
+        \)
+        \ ||(phpcomplete_extended#isClassOfType(a:fqcn, containerBuilderFQCN)
+        \    && (methodPropertyText == 'getDefinition' || methodPropertyText == 'hasDefinition' || methodPropertyText == 'removeDefinition')
+        \ ) 
 
         let is_service = 1
         let menu_candidates = symfony_index['services']['public']
