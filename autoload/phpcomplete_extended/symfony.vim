@@ -86,14 +86,18 @@ function! s:get_fqcn(parentFQCN, token_data) "{{{
     let methodPropertyText = a:token_data['methodPropertyText']
     let isMethod = has_key(a:token_data, 'isMethod')? a:token_data.isMethod : 0
     let insideBraceText = substitute(s:trim_quote(a:token_data['insideBraceText']), '\\', '', 'g')
-    let containerAwareFQCN  = 'Symfony\Component\DependencyInjection\ContainerAwareInterface'
-    let controllerFQCN = 'Symfony\Bundle\FrameworkBundle\Controller\Controller'
-    let objectManagerFQCN = 'Doctrine\Common\Persistence\ObjectManager'
+
+    let containerAwareFQCN = 'Symfony\Component\DependencyInjection\ContainerAwareInterface'
+    let containerFQCN      = 'Symfony\Component\DependencyInjection\ContainerInterface'
+    let controllerFQCN     = 'Symfony\Bundle\FrameworkBundle\Controller\Controller'
+    let objectManagerFQCN  = 'Doctrine\Common\Persistence\ObjectManager'
 
     let symfony_index = s:symfony_index
     let fqcn = ""
 
-    if phpcomplete_extended#isClassOfType(a:parentFQCN, containerAwareFQCN)
+    if (phpcomplete_extended#isClassOfType(a:parentFQCN, containerAwareFQCN)
+        \ || phpcomplete_extended#isClassOfType(a:parentFQCN, containerFQCN)
+        \ )
         \ && isMethod && methodPropertyText == "get"
         \ && has_key(symfony_index['services']['public'], insideBraceText)
         return symfony_index['services']['public'][insideBraceText]['service_fqcn']
