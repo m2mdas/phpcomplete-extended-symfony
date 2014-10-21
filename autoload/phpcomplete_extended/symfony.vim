@@ -167,12 +167,12 @@ function! s:get_inside_quote_menu_entries(fqcn, token_data) "{{{
     elseif phpcomplete_extended#isClassOfType(a:fqcn, controllerFQCN)
             \ && (methodPropertyText == "render" || methodPropertyText == 'renderView')
 
-        let menu_candidates = symfony_index['views_key_path']
+        let menu_candidates = symfony_index['templates']
 
     elseif phpcomplete_extended#isClassOfType(a:fqcn, twigEngineFQCN)
             \ && (methodPropertyText == "render" || methodPropertyText == 'renderView')
 
-        let menu_candidates = symfony_index['views_key_path']
+        let menu_candidates = symfony_index['templates']
     endif
 
     let menu_candidates  = filter(menu_candidates, 'v:key =~ "^' . escape(insideBraceText, '') .'"')
