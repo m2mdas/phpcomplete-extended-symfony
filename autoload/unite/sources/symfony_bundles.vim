@@ -27,7 +27,8 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Cache = unite#util#get_vital().import('System.Cache')
+" let s:Cache = unite#util#get_vital().import('System.Cache')
+let s:Cache = unite#util#get_vital_cache()
 
 function! unite#sources#symfony_bundles#define() "{{{
     let sources = [ s:symfony_bundles]
